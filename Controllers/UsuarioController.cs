@@ -9,8 +9,8 @@ namespace SistemaDeTarefas.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly ITarefaRepository _usuarioRepository;
-        public UsuarioController(ITarefaRepository usuarioRepository)
+        private readonly IUsuarioRepository _usuarioRepository;
+        public UsuarioController(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
         }
