@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SistemaDeTarefas.Integration.Interfaces;
+using SistemaDeTarefas.Integration.Response;
 
 namespace SistemaDeTarefas.Controllers
 {
@@ -7,5 +9,24 @@ namespace SistemaDeTarefas.Controllers
     [ApiController]
     public class CepController : ControllerBase
     {
+        private readonly IViaCepIntegration _viaCepIntegration;
+        public CepController(IViaCepIntegration viaCepIntegration)
+        {
+            _viaCepIntegration = viaCepIntegration;
+        }
+
+        [HttpGet("{cep}")]
+        public async Task<ActionResult<ViaCepResponse>> ListarDadosEndereco(string cep)
+        {
+            var responseData = await _viaCepIntegration.ObterDadosViaCep(cep);
+            
+            if (responseData == null)
+            {
+                return BadRequest("CEP não encontrado.");
+            }
+
+            return Ok(responseData);
+        }
+
     }
 }
